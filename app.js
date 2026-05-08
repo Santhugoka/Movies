@@ -517,6 +517,11 @@ function openDetail(id, type) {
 function playVideo(title, id) {
     document.getElementById('player-title').innerText = title;
     const playerContainer = document.getElementById('video-player-container');
+    const controls = document.getElementById('player-controls-overlay');
+    
+    // Reset controls visibility
+    controls.style.opacity = '1';
+    controls.style.pointerEvents = 'auto';
     
     // Clear and set new player
     playerContainer.innerHTML = `
@@ -531,6 +536,22 @@ function playVideo(title, id) {
     `;
     
     switchScreen('player-screen');
+
+    // Auto-hide controls after 3 seconds
+    setTimeout(() => {
+        controls.style.opacity = '0';
+        controls.style.pointerEvents = 'none';
+    }, 3000);
+
+    // Show controls on tap
+    playerContainer.onclick = () => {
+        controls.style.opacity = '1';
+        controls.style.pointerEvents = 'auto';
+        setTimeout(() => {
+            controls.style.opacity = '0';
+            controls.style.pointerEvents = 'none';
+        }, 3000);
+    };
 }
 function backFromPlayer() {
     document.getElementById('video-player-container').innerHTML = '';
