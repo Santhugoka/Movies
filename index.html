@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>StreamVue - Premium OTT Experience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen active">
+            <header class="app-header">
+                <div class="header-logo">STREAMVUE</div>
+                <div class="header-icons">
+                    <i class="fa-solid fa-moon theme-toggle" onclick="toggleTheme()"></i>
+                </div>
+            </header>
+
+            <div class="hero-banner" id="hero-banner-content">
+                <!-- Dynamic Content -->
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchScreen('home-screen')">Home</div>
+                <div class="tab" onclick="switchScreen('movies-screen')">Movies</div>
+                <div class="tab" onclick="switchScreen('series-screen')">Web Series</div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">Trending Now</div>
+                    <div class="view-all" onclick="switchScreen('movies-screen')" style="cursor: pointer;">See All</div>
+                </div>
+                <div class="horizontal-scroll" id="trending-list"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">Continue Watching</div>
+                </div>
+                <div class="horizontal-scroll" id="continue-watching"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">Recommended For You</div>
+                    <div class="view-all" onclick="switchScreen('series-screen')" style="cursor: pointer;">See All</div>
+                </div>
+                <div class="horizontal-scroll" id="recommended-list"></div>
+            </div>
+        </div>
+
+        <!-- Movies Screen -->
+        <div id="movies-screen" class="screen">
+            <header class="app-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fa-solid fa-arrow-left" onclick="switchScreen('home-screen')" style="cursor: pointer; font-size: 1.2rem;"></i>
+                    <div class="header-logo">Movies</div>
+                </div>
+                <div class="header-icons">
+                    <i class="fa-solid fa-moon theme-toggle" onclick="toggleTheme()"></i>
+                </div>
+            </header>
+
+
+            <div class="grid-container" id="movies-grid"></div>
+        </div>
+
+        <!-- Series Screen -->
+        <div id="series-screen" class="screen">
+            <header class="app-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fa-solid fa-arrow-left" onclick="switchScreen('home-screen')" style="cursor: pointer; font-size: 1.2rem;"></i>
+                    <div class="header-logo">Web Series</div>
+                </div>
+                <div class="header-icons">
+                    <i class="fa-solid fa-moon theme-toggle" onclick="toggleTheme()"></i>
+                </div>
+            </header>
+
+
+            <div class="grid-container" id="series-grid"></div>
+        </div>
+
+        <!-- Detail Screen -->
+        <div id="detail-screen" class="screen">
+            <div id="detail-body">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- Player Screen -->
+        <div id="player-screen" class="screen">
+            <div class="video-container">
+                <div class="video-placeholder" id="video-player-container" style="background: #000; height: 100%;">
+                    <!-- Iframe will be injected here -->
+                </div>
+                <div class="player-controls" id="player-controls-overlay">
+                    <div class="player-top">
+                        <i class="fa-solid fa-arrow-left" onclick="backFromPlayer()"></i>
+                        <div id="player-title" style="font-size: 0.9rem; font-weight: 500;">Movie Title</div>
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <div class="player-center">
+                        <i class="fa-solid fa-backward-step"></i>
+                        <i class="fa-solid fa-pause"></i>
+                        <i class="fa-solid fa-forward-step"></i>
+                    </div>
+                    <div class="player-bottom">
+                        <div class="progress-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                        <div class="time-row">
+                            <span>12:45</span>
+                            <span>45:00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                            <i class="fa-solid fa-closed-captioning"></i>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Screen -->
+        <div id="search-screen" class="screen">
+            <header class="app-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fa-solid fa-arrow-left" onclick="switchScreen('home-screen')" style="cursor: pointer; font-size: 1.2rem;"></i>
+                    <div class="header-logo">Search</div>
+                </div>
+            </header>
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search movies, series...">
+                    <i class="fa-solid fa-microphone"></i>
+                </div>
+            </div>
+            <div id="search-results" class="grid-container"></div>
+        </div>
+
+
+        <!-- Downloads Screen -->
+        <div id="downloads-screen" class="screen">
+            <header class="app-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fa-solid fa-arrow-left" onclick="switchScreen('home-screen')" style="cursor: pointer; font-size: 1.2rem;"></i>
+                    <div class="header-logo">Downloads</div>
+                </div>
+            </header>
+            <div id="downloads-container" style="padding: 20px;"></div>
+            <div id="downloads-empty" class="empty-state" style="display: none;">
+                <i class="fa-solid fa-download"></i>
+                <p>No downloads available</p>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-screen="home-screen" onclick="switchScreen('home-screen')">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" data-screen="search-screen" onclick="switchScreen('search-screen')">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search</span>
+            </div>
+            <div class="nav-item" data-screen="movies-screen" onclick="switchScreen('movies-screen')">
+                <i class="fa-solid fa-clapperboard"></i>
+                <span>Movies</span>
+            </div>
+            <div class="nav-item" data-screen="series-screen" onclick="switchScreen('series-screen')">
+                <i class="fa-solid fa-tv"></i>
+                <span>Series</span>
+            </div>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
